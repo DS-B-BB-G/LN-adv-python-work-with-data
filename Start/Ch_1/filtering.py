@@ -44,3 +44,9 @@ events = list(filter(notAQuake, data["features"]))
 print(f"Total non-quake events: {len(events)}")
 for i in range(0, 10):
     print(events[i]["properties"]["type"])
+
+
+# lambda filter
+nums = [1, 5, 9, 13, 17, 21, 25]
+output = list(filter(lambda x: x > 9, nums))
+print(output)
