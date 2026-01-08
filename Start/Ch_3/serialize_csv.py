@@ -12,14 +12,30 @@ with open("../../30DayQuakes.json", "r") as datafile:
 
 def isbig(x):
     mag = x["properties"]["mag"]
-    return mag is not None and mag > 5
+    return mag is not None and mag > 5.5
 
 
-# Filter the data by quakes that are larger than 5 magnitude
+# Filter the data by quakes that are larger than 5.5 magnitude
 largequakes = list(filter(isbig, data["features"]))
 
 # TODO: Create the header and row structures for the data
+header = ["Place", "Magnitude", "Link", "Date"]
+rows = []
 
 # TODO: populate the rows with the resulting quake data
+for quake in largequakes:
+    thedate = datetime.date.fromtimestamp(
+        int(quake["properties"]["time"] / 1000))
+    rows.append([quake["properties"]["place"], 
+                quake["properties"]["mag"],
+                quake["properties"]["url"],
+                thedate])
+
+# print(rows)
 
 # TODO: write the results to the CSV file
+
+with open("largequakes.csv","w") as csvfile:
+    writer = csv.writer(csvfile, delimiter=",")
+    writer.writerow(header)
+    writer.writerows(rows)
